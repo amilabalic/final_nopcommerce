@@ -1,6 +1,8 @@
 class cartPage {
   removeBtn() {
-    return cy.get('button.remove-btn');
+    return cy.get(
+      '#shopping-cart-form > div.table-wrapper > table > tbody > tr > td.remove-from-cart > button'
+    );
   }
 
   removedDiv() {

@@ -56,7 +56,8 @@ Cypress.Commands.add('addProductToCart', () => {
 Cypress.Commands.add('removeProductFromCart', () => {
   homepage.closeBannerBtn().click();
   homepage.cartBtn().click();
-  cartPage.removeBtn().dblclick();
+  cartPage.removeBtn().click();
+  cy.get('#updatecart').click();
   /* cartPage
     .removedDiv()
     .should('be.visible')
