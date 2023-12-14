@@ -30,5 +30,9 @@ class homePage {
   voteBtn() {
     return cy.get('#vote-poll-1');
   }
+
+  cartElementsBtn() {
+    return cy.get('#topcartlink > a > span.cart-qty');
+  }
 }
 module.exports = new homePage();

@@ -14,5 +14,13 @@ class productPage {
   addToCartBanner() {
     return cy.get('.bar-notification');
   }
+
+  closeBtnBanner() {
+    return cy.get('span[title="Close"]');
+  }
+
+  hyperlinkBanner() {
+    return cy.contains('a', 'shopping cart');
+  }
 }
 module.exports = new productPage();

@@ -7,6 +7,7 @@ import registerPage from '../page_objects/registerPage';
 import 'cypress-real-events/support';
 
 Cypress.Commands.add('registerForm', () => {
+  cy.get('.ico-login').should('have.text', 'Log in');
   cy.fixture('data').then((data) => {
     cy.get('@firstName').then((firstName) => {
       registerPage.firstNameInput().type(firstName);
@@ -43,16 +44,27 @@ Cypress.Commands.add('addProductToCart', () => {
     .should('be.visible')
     .should('have.css', 'background-color', 'rgb(75, 176, 122)')
     .should('have.text', 'The product has been added to your shopping cart');
+  productPage.closeBtnBanner().should('be.visible');
+  productPage
+    .hyperlinkBanner()
+    .should('be.visible')
+    .should('have.attr', 'href', '/cart')
+    .should('have.text', 'shopping cart');
+  homepage.cartElementsBtn().should('have.text', '(1)');
 });
 
 Cypress.Commands.add('removeProductFromCart', () => {
   homepage.closeBannerBtn().click();
   homepage.cartBtn().click();
-  cartPage.removeBtn().realClick();
+  cartPage.removeBtn().dblclick();
+  /* cartPage
+    .removedDiv()
+    .should('be.visible')
+    .should('have.text', 'Your Shopping Cart is empty!');
+  homepage.cartElementsBtn().should('have.text', '(0)');*/
 });
 
 Cypress.Commands.add('takingCommunityPoll', () => {
-  cy.visit('https://demo.nopcommerce.com/');
   homepage.excellentPollBtn().click();
   homepage.voteBtn().click();
 });
