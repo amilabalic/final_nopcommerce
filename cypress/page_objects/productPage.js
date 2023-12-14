@@ -22,5 +22,16 @@ class productPage {
   hyperlinkBanner() {
     return cy.contains('a', 'shopping cart');
   }
+
+  hyperlinkCompareBanner() {
+    return cy.get('.content > a');
+    // cy.contains('a', 'product comparison')
+  }
+
+  compareBtn() {
+    return cy.get(
+      ':nth-child(1) > .product-item > .details > .add-info > .buttons > .add-to-compare-list-button'
+    );
+  }
 }
 module.exports = new productPage();

@@ -56,16 +56,53 @@ Cypress.Commands.add('addProductToCart', () => {
 Cypress.Commands.add('removeProductFromCart', () => {
   homepage.closeBannerBtn().click();
   homepage.cartBtn().click();
+  cy.wait(2000);
   cartPage.removeBtn().click();
-  cy.get('#updatecart').click();
-  /* cartPage
-    .removedDiv()
+  cy.wait(2000);
+  cy.get('.no-data').then(($div) => {
+    expect($div).to.have.text('\nYour Shopping Cart is empty!\n');
+  });
+  homepage.cartElementsBtn().should('have.text', '(0)');
+});
+
+Cypress.Commands.add('addProductToCompareList', () => {
+  homepage.computersBtn().realHover('mouse');
+  homepage.desktopsBtn().click();
+  productPage.compareBtn().click();
+  cy.wait(1000);
+  productPage
+    .addToCartBanner()
     .should('be.visible')
-    .should('have.text', 'Your Shopping Cart is empty!');
-  homepage.cartElementsBtn().should('have.text', '(0)');*/
+    .should('have.css', 'background-color', 'rgb(75, 176, 122)')
+    .should(
+      'have.text',
+      'The product has been added to your product comparison'
+    );
+
+  productPage
+    .hyperlinkCompareBanner()
+    .should('be.visible')
+    .should('have.attr', 'href', '/compareproducts')
+    .should('have.text', 'product comparison');
+
+  productPage.closeBtnBanner().should('be.visible');
+});
+
+Cypress.Commands.add('removeProductFromTheCompareList', () => {
+  homepage.compareListHyperlink().click();
+  cy.get('.button-2').click();
+  cy.wait(500);
+  cy.get('.no-data').then(($div) => {
+    expect($div).to.have.text('You have no items to compare.');
+  });
 });
 
 Cypress.Commands.add('takingCommunityPoll', () => {
   homepage.excellentPollBtn().click();
   homepage.voteBtn().click();
+  homepage.loadingAnimation().should('be.visible');
+  homepage.firstPollResult().contains('Excellent');
+  homepage.secondPollResult().contains('Good');
+  homepage.thirdPollResult().contains('Poor');
+  homepage.fourthPollResult().contains('Very bad');
 });

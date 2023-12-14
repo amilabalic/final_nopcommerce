@@ -34,5 +34,29 @@ class homePage {
   cartElementsBtn() {
     return cy.get('#topcartlink > a > span.cart-qty');
   }
+
+  loadingAnimation() {
+    return cy.get('#poll-voting-progress-1');
+  }
+
+  firstPollResult() {
+    return cy.get('.poll-results > :nth-child(1)');
+  }
+
+  secondPollResult() {
+    return cy.get('.poll-results > :nth-child(2)');
+  }
+
+  thirdPollResult() {
+    return cy.get('.poll-results > :nth-child(3)');
+  }
+
+  fourthPollResult() {
+    return cy.get('.poll-results > :nth-child(4)');
+  }
+
+  compareListHyperlink() {
+    return cy.get('.customer-service > .list > :nth-child(5) > a');
+  }
 }
 module.exports = new homePage();
