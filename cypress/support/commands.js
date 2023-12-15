@@ -1,6 +1,6 @@
 import cartPage from '../page_objects/cartPage';
 import desktopsPage from '../page_objects/desktopsPage';
-import homepage, { closeBannerBtn } from '../page_objects/homepage';
+import homepage from '../page_objects/homepage';
 import loginPage from '../page_objects/loginPage';
 import productPage from '../page_objects/productPage';
 import registerPage from '../page_objects/registerPage';
@@ -53,16 +53,48 @@ Cypress.Commands.add('addProductToCart', () => {
   homepage.cartElementsBtn().should('have.text', '(1)');
 });
 
+Cypress.Commands.add('estimateShipping', () => {
+  cy.fixture('data').then((data) => {
+    homepage.closeBannerBtn().click();
+    homepage.cartBtn().click();
+    cy.wait(1000);
+    cartPage.estimateShippingBtn().click();
+    cy.wait(500);
+    cartPage
+      .selectCountryDrp()
+      .select('United States')
+      .should('have.value', '1');
+    cartPage.zipInput().type(data.postalCode);
+    cy.wait(1000);
+    cartPage.applyBtn().click();
+    cy.wait(2000);
+  });
+});
+
 Cypress.Commands.add('removeProductFromCart', () => {
-  homepage.closeBannerBtn().click();
-  homepage.cartBtn().click();
-  cy.wait(2000);
   cartPage.removeBtn().click();
-  cy.wait(2000);
+  cy.wait(1000);
   cy.get('.no-data').then(($div) => {
     expect($div).to.have.text('\nYour Shopping Cart is empty!\n');
   });
   homepage.cartElementsBtn().should('have.text', '(0)');
+});
+
+Cypress.Commands.add('addGiftCardToCart', () => {
+  homepage.giftCardsBtn().click();
+  productPage.giftCardHyperlink().click();
+  cy.fixture('data').then((data) => {
+    productPage.recipientsNameInput().type(data.recipientsName);
+    productPage.recipientsEmailInput().type(data.recipientsEmail);
+  });
+  productPage.addGiftToCartBtn().click();
+  productPage.closeBtnBanner().should('be.visible');
+  productPage
+    .hyperlinkBanner()
+    .should('be.visible')
+    .should('have.attr', 'href', '/cart')
+    .should('have.text', 'shopping cart');
+  homepage.cartElementsBtn().should('have.text', '(1)');
 });
 
 Cypress.Commands.add('addProductToCompareList', () => {
@@ -105,4 +137,11 @@ Cypress.Commands.add('takingCommunityPoll', () => {
   homepage.secondPollResult().contains('Good');
   homepage.thirdPollResult().contains('Poor');
   homepage.fourthPollResult().contains('Very bad');
+});
+
+Cypress.Commands.add('search', () => {
+  cy.fixture('data').then((data) => {
+    homepage.searchInput().type(data.searchData);
+  });
+  homepage.searchBtn().click();
 });

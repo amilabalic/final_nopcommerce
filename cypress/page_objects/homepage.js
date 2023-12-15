@@ -58,5 +58,17 @@ class homePage {
   compareListHyperlink() {
     return cy.get('.customer-service > .list > :nth-child(5) > a');
   }
+
+  giftCardsBtn() {
+    return cy.get('.notmobile > :nth-child(7) > a');
+  }
+
+  searchInput() {
+    return cy.get('#small-searchterms');
+  }
+
+  searchBtn() {
+    return cy.get('#small-search-box-form > .button-1');
+  }
 }
 module.exports = new homePage();

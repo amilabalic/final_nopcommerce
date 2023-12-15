@@ -1,3 +1,7 @@
 {
-  "password": "password123456"
+  "password": "password123456",
+  "postalCode": "10001",
+  "recipientsName": "test",
+  "recipientsEmail": "test@mail.com",
+  "searchData": "Apple iCam"
 }
