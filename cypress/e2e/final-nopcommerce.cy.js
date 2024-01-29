@@ -1,8 +1,3 @@
-import homepage from '../page_objects/homepage';
-import registerPage from '../page_objects/registerPage';
-import regCompletePage from '../page_objects/regCompletePage';
-import loginPage from '../page_objects/loginPage';
-
 describe('final_nopcommerce', () => {
   it('Add and remove product from the cart', () => {
     cy.addProductToCart();

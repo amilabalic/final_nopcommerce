@@ -8,6 +8,7 @@ import 'cypress-real-events/support';
 
 Cypress.Commands.add('registerForm', () => {
   cy.get('.ico-login').should('have.text', 'Log in');
+
   cy.fixture('data').then((data) => {
     cy.get('@firstName').then((firstName) => {
       registerPage.firstNameInput().type(firstName);
